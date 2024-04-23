@@ -14,22 +14,22 @@ from dotenv import load_dotenv
 import playsound
 
 # Аутентификация через API-ключ.
-configure_credentials(
-   yandex_credentials=creds.YandexCredentials(
-      api_key=st.secrets["YC_API_KEY"]
-   )
-)
+# configure_credentials(
+#    yandex_credentials=creds.YandexCredentials(
+#       api_key=st.secrets["YC_API_KEY"]
+#    )
+# )
 
-def synthesize(text, export_path):
-   model = model_repository.synthesis_model()
+# def synthesize(text, export_path):
+#    model = model_repository.synthesis_model()
 
-   # Задайте настройки синтеза.
-   model.voice = 'jane'
-   model.role = 'good'
+#    # Задайте настройки синтеза.
+#    model.voice = 'jane'
+#    model.role = 'good'
 
-   # Синтез речи и создание аудио с результатом.
-   result = model.synthesize(text, raw_format=False)
-   result.export(export_path, 'mp3')
+#    # Синтез речи и создание аудио с результатом.
+#    result = model.synthesize(text, raw_format=False)
+#    result.export(export_path, 'mp3')
 
 
 # это основная функция, которая запускает приложение streamlit
