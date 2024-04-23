@@ -175,6 +175,7 @@ def main():
         st.chat_message("ai").write(response.content)
         st.button('Озвучить ответ!', on_click=ozuvi4it_mp3_fa4il, args=('./Hello.mp3', response.content, sk_api_ep))
         if st.button:
+            st.write("Запись ответа:")
             st.audio("./Hello.mp3", format="audio/mpeg", loop=False)
 
     # Отобразить сообщения в конце, чтобы вновь сгенерированные отображались сразу
