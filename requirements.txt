@@ -1,7 +1,7 @@
 yandex-speechkit
 yandex-chain
 langchain==0.1.4
-yandexcloud
+yandexcloud==0.227.0
 streamlit
 streamlit-chat
 python-dotenv
