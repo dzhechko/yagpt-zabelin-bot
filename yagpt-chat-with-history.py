@@ -146,9 +146,6 @@ def main():
         
     st.sidebar.button("Обнулить историю общения",on_click=history_reset_function)
 
-    speech_button = st.button("Озвучить ответ")
-
-
     # Настраиваем LangChain, передавая Message History
     # промпт с учетом контекста общения
     prompt = ChatPromptTemplate.from_messages(
@@ -187,6 +184,7 @@ def main():
         config = {"configurable": {"session_id": "any"}}
         response = chain_with_history.invoke({"question": prompt}, config)
         st.chat_message("ai").write(response.content)
+        speech_button = st.button("Озвучить ответ")
         if speech_button:
             mytext = f"Озвучка {response.content}"
             st.text(mytext)
