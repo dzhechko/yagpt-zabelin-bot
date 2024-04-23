@@ -8,7 +8,7 @@ import streamlit as st
 import os
 # from dotenv import load_dotenv
 
-from playsound import playsound
+from pydub import AudioSegment
 import requests
 
 def ozuvi4it_mp3_fa4il(fa4il_put,  text, api_key):
@@ -16,8 +16,12 @@ def ozuvi4it_mp3_fa4il(fa4il_put,  text, api_key):
     res_tts = requests.get(api_key, params=params)
     # The response is a stream of bytes, so you can write it to a file
     with open(fa4il_put, "wb") as f:
-        f.write(res_tts.content)    
-    playsound(fa4il_put)
+        f.write(res_tts.content)  
+    # Load the MP3 file
+    audio = AudioSegment.from_file(fa4il_put)
+    # Play the audio
+    audio.play()  
+
 
 
 # это основная функция, которая запускает приложение streamlit
