@@ -8,6 +8,10 @@ import streamlit as st
 import os
 from dotenv import load_dotenv
 
+from speechkit import model_repository, configure_credentials, creds
+from speechkit.stt import AudioProcessingType
+import playsound
+
 # это основная функция, которая запускает приложение streamlit
 def main():
     # Загрузка логотипа компании
@@ -123,6 +127,8 @@ def main():
     st.sidebar.button("Обнулить историю общения",on_click=history_reset_function)
 
     speech_button = st.button("Озвучить ответ")
+    if speech_button:
+        playsound.playsound("./images/Hello.mp3")
 
     # Настраиваем LangChain, передавая Message History
     # промпт с учетом контекста общения
