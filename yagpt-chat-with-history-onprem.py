@@ -9,13 +9,17 @@ import streamlit as st
 import os
 from dotenv import load_dotenv
 
-# from speechkit import model_repository, configure_credentials, creds
-# from speechkit.stt import AudioProcessingType
 from playsound import playsound
+import requests
 
-def ozuvi4it_mp3_fa4il(fa4il_put):
+def ozuvi4it_mp3_fa4il(fa4il_put,  text, api_key):
+    params = {"text": text,"voice": "marina", "role": "friendly"}
+    res_tts = requests.get(api_key, params=params)
+    # The response is a stream of bytes, so you can write it to a file
+    with open(fa4il_put, "wb") as f:
+        f.write(res_tts.content)    
     playsound(fa4il_put)
-    time.sleep(1)
+
 
 # это основная функция, которая запускает приложение streamlit
 def main():
@@ -64,6 +68,7 @@ def main():
     load_dotenv()
     yagpt_folder_id = os.getenv("YC_FOLDER_ID")
     yagpt_api_key = os.getenv("YC_API_KEY")
+    sk_api_ep = os.getenv("SK_API_EP")
 
 
     # # Получение folder id
@@ -131,10 +136,6 @@ def main():
         
     st.sidebar.button("Обнулить историю общения",on_click=history_reset_function)
 
-    speech_button = st.button("Озвучить ответ")
-    if speech_button:
-        playsound.playsound("./images/Hello.mp3")
-
     # Настраиваем LangChain, передавая Message History
     # промпт с учетом контекста общения
     prompt = ChatPromptTemplate.from_messages(
@@ -173,8 +174,17 @@ def main():
         config = {"configurable": {"session_id": "any"}}
         response = chain_with_history.invoke({"question": prompt}, config)
         st.chat_message("ai").write(response.content)
-        st.button('Нажмите, чтобы озвучить mp3 файл', on_click=ozuvi4it_mp3_fa4il, args=('./images/Hello.mp3',))
-
+        st.button('Нажмите, чтобы озвучить mp3 файл', on_click=ozuvi4it_mp3_fa4il, args=('./images/Hello.mp3', response.content, sk_api_ep))
+        # speech_button = st.button("Озвучить ответ")
+        # if speech_button:
+        #     mytext = f"Озвучка {response.content}"
+        #     st.text(mytext)            
+        #     params = {"text": response.content,"voice": "marina", "role": "friendly"}
+        #     res_tts = requests.get(sk_api_ep, params=params)
+        #     # The response is a stream of bytes, so you can write it to a file
+        #     with open("./images/output.mp3", "wb") as f:
+        #         f.write(res_tts.content)
+        #     playsound("./images/output.mp3")
     # Отобразить сообщения в конце, чтобы вновь сгенерированные отображались сразу
     with view_messages:
         """

@@ -6,14 +6,17 @@ from langchain_community.chat_models import ChatYandexGPT
 
 import streamlit as st
 import os
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
-# from argparse import ArgumentParser
-# from speechkit import model_repository, configure_credentials, creds
-# from speechkit.stt import AudioProcessingType
 from playsound import playsound
+import requests
 
-def ozuvi4it_mp3_fa4il(fa4il_put):
+def ozuvi4it_mp3_fa4il(fa4il_put,  text, api_key):
+    params = {"text": text,"voice": "marina", "role": "friendly"}
+    res_tts = requests.get(api_key, params=params)
+    # The response is a stream of bytes, so you can write it to a file
+    with open(fa4il_put, "wb") as f:
+        f.write(res_tts.content)    
     playsound(fa4il_put)
 
 # Аутентификация через API-ключ.
@@ -77,6 +80,7 @@ def main():
 
     yagpt_folder_id = st.secrets["YC_FOLDER_ID"]
     yagpt_api_key = st.secrets["YC_API_KEY"]
+    sk_api_ep = st.secrets["SK_API_EP"]
 
     # Загрузка переменных из файла .env
     # load_dotenv()
@@ -187,12 +191,12 @@ def main():
         config = {"configurable": {"session_id": "any"}}
         response = chain_with_history.invoke({"question": prompt}, config)
         st.chat_message("ai").write(response.content)
-        # st.button('Нажмите, чтобы озвучить mp3 файл', on_click=ozuvi4it_mp3_fa4il, args=('./images/Hello.mp3',))
-        speech_button = st.button("Озвучить ответ")
-        if speech_button:
-            mytext = f"Озвучка {response.content}"
-            st.text(mytext)
-        #     playsound.playsound("./images/Hello.mp3")
+        st.button('Нажмите, чтобы озвучить mp3 файл', on_click=ozuvi4it_mp3_fa4il, args=('./images/Hello.mp3', response.content, sk_api_ep))
+        # speech_button = st.button("Озвучить ответ")
+        # if speech_button:
+        #     mytext = f"Озвучка {response.content}"
+        #     st.text(mytext)
+        # #      playsound.playsound("./images/Hello.mp3")
 
     # Отобразить сообщения в конце, чтобы вновь сгенерированные отображались сразу
     with view_messages:
