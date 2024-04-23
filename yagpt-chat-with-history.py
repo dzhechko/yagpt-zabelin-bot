@@ -182,7 +182,7 @@ def main():
         # The response is a stream of bytes, so you can write it to a file
         with open(file_name, "wb") as f:
             f.write(res_tts.content)  
-        st.write("Запись ответа:")
+        st.write("Озвучить ответ:")
         st.audio("./Hello.mp3", format="audio/mpeg", loop=False)
 
     # Отобразить сообщения в конце, чтобы вновь сгенерированные отображались сразу
