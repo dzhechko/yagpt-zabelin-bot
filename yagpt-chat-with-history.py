@@ -8,9 +8,9 @@ import streamlit as st
 import os
 from dotenv import load_dotenv
 
-from argparse import ArgumentParser
-from speechkit import model_repository, configure_credentials, creds
-from speechkit.stt import AudioProcessingType
+# from argparse import ArgumentParser
+# from speechkit import model_repository, configure_credentials, creds
+# from speechkit.stt import AudioProcessingType
 import playsound
 
 # Аутентификация через API-ключ.
@@ -184,6 +184,7 @@ def main():
         config = {"configurable": {"session_id": "any"}}
         response = chain_with_history.invoke({"question": prompt}, config)
         st.chat_message("ai").write(response.content)
+
         speech_button = st.button("Озвучить ответ")
         if speech_button:
             mytext = f"Озвучка {response.content}"
