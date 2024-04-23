@@ -8,7 +8,7 @@ import streamlit as st
 import os
 # from dotenv import load_dotenv
 
-# from playsound import playsound
+from playsound import playsound
 import requests
 
 def ozuvi4it_mp3_fa4il(fa4il_put,  text, api_key):
@@ -17,7 +17,7 @@ def ozuvi4it_mp3_fa4il(fa4il_put,  text, api_key):
     # The response is a stream of bytes, so you can write it to a file
     with open(fa4il_put, "wb") as f:
         f.write(res_tts.content)    
-    # playsound(fa4il_put)
+    playsound(fa4il_put)
 
 
 # это основная функция, которая запускает приложение streamlit
