@@ -173,8 +173,15 @@ def main():
         config = {"configurable": {"session_id": "any"}}
         response = chain_with_history.invoke({"question": prompt}, config)
         st.chat_message("ai").write(response.content)
-        st.button('Озвучить ответ!', on_click=ozuvi4it_mp3_fa4il, args=('./Hello.mp3', response.content, sk_api_ep))
+        # st.button('Озвучить ответ!', on_click=ozuvi4it_mp3_fa4il, args=('./Hello.mp3', response.content, sk_api_ep))
+        st.button('Озвучить ответ!')
         if st.button:
+            file_name = "./Hello.mp3"
+            params = {"text": response.content,"voice": "marina", "role": "friendly"}
+            res_tts = requests.get(sk_api_ep, params=params)
+            # The response is a stream of bytes, so you can write it to a file
+            with open(file_name, "wb") as f:
+                f.write(res_tts.content)  
             st.write("Запись ответа:")
             st.audio("./Hello.mp3", format="audio/mpeg", loop=False)
 
