@@ -119,11 +119,10 @@ def main():
         # Code to be executed when the reset button is clicked
         st.session_state.clear()
 
-    def speek_function():
-        st.session_state.clear()
         
     st.sidebar.button("Обнулить историю общения",on_click=history_reset_function)
-    st.button("Озвучить ответ",on_click=speek_function)
+
+    st.button("Озвучить ответ")
 
     # Настраиваем LangChain, передавая Message History
     # промпт с учетом контекста общения
