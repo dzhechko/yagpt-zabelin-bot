@@ -8,9 +8,12 @@ import streamlit as st
 import os
 from dotenv import load_dotenv
 
-from speechkit import model_repository, configure_credentials, creds
-from speechkit.stt import AudioProcessingType
-import playsound
+# from speechkit import model_repository, configure_credentials, creds
+# from speechkit.stt import AudioProcessingType
+from playsound import playsound
+
+def ozuvi4it_mp3_fa4il(fa4il_put):
+    playsound(fa4il_put)
 
 # это основная функция, которая запускает приложение streamlit
 def main():
@@ -168,6 +171,7 @@ def main():
         config = {"configurable": {"session_id": "any"}}
         response = chain_with_history.invoke({"question": prompt}, config)
         st.chat_message("ai").write(response.content)
+        st.button('Нажмите, чтобы озвучить mp3 файл', on_click=ozuvi4it_mp3_fa4il, args=('./images/Hello.mp3',))
 
     # Отобразить сообщения в конце, чтобы вновь сгенерированные отображались сразу
     with view_messages:
