@@ -5,3 +5,4 @@ streamlit-chat
 langchain
 yandexcloud
 python-dotenv
+playsound
