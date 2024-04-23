@@ -189,7 +189,7 @@ def main():
         if speech_button:
             mytext = f"Озвучка {response.content}"
             st.text(mytext)
-            # playsound.playsound("./images/Hello.mp3")
+            playsound.playsound("./images/Hello.mp3")
 
     # Отобразить сообщения в конце, чтобы вновь сгенерированные отображались сразу
     with view_messages:
