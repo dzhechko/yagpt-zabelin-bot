@@ -8,9 +8,29 @@ import streamlit as st
 import os
 from dotenv import load_dotenv
 
+from argparse import ArgumentParser
 from speechkit import model_repository, configure_credentials, creds
 from speechkit.stt import AudioProcessingType
 import playsound
+
+# Аутентификация через API-ключ.
+configure_credentials(
+   yandex_credentials=creds.YandexCredentials(
+      api_key=st.secrets["YC_API_KEY"]
+   )
+)
+
+def synthesize(text, export_path):
+   model = model_repository.synthesis_model()
+
+   # Задайте настройки синтеза.
+   model.voice = 'jane'
+   model.role = 'good'
+
+   # Синтез речи и создание аудио с результатом.
+   result = model.synthesize(text, raw_format=False)
+   result.export(export_path, 'mp3')
+
 
 # это основная функция, которая запускает приложение streamlit
 def main():
@@ -127,9 +147,7 @@ def main():
     st.sidebar.button("Обнулить историю общения",on_click=history_reset_function)
 
     speech_button = st.button("Озвучить ответ")
-    if speech_button:
-        st.text("Озвучка")
-        playsound.playsound("./images/Hello.mp3")
+
 
     # Настраиваем LangChain, передавая Message History
     # промпт с учетом контекста общения
@@ -169,6 +187,10 @@ def main():
         config = {"configurable": {"session_id": "any"}}
         response = chain_with_history.invoke({"question": prompt}, config)
         st.chat_message("ai").write(response.content)
+        if speech_button:
+            mytext = f"Озвучка {response.content}"
+            st.text(mytext)
+            # playsound.playsound("./images/Hello.mp3")
 
     # Отобразить сообщения в конце, чтобы вновь сгенерированные отображались сразу
     with view_messages:
