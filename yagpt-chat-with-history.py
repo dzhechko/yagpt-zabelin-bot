@@ -187,11 +187,11 @@ def main():
         config = {"configurable": {"session_id": "any"}}
         response = chain_with_history.invoke({"question": prompt}, config)
         st.chat_message("ai").write(response.content)
-        st.button('Нажмите, чтобы озвучить mp3 файл', on_click=ozuvi4it_mp3_fa4il, args=('./images/Hello.mp3',))
-        # speech_button = st.button("Озвучить ответ")
-        # if speech_button:
-        #     mytext = f"Озвучка {response.content}"
-        #     st.text(mytext)
+        # st.button('Нажмите, чтобы озвучить mp3 файл', on_click=ozuvi4it_mp3_fa4il, args=('./images/Hello.mp3',))
+        speech_button = st.button("Озвучить ответ")
+        if speech_button:
+            mytext = f"Озвучка {response.content}"
+            st.text(mytext)
         #     playsound.playsound("./images/Hello.mp3")
 
     # Отобразить сообщения в конце, чтобы вновь сгенерированные отображались сразу

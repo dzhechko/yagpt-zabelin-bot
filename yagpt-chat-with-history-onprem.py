@@ -2,6 +2,7 @@ from langchain_community.chat_message_histories import StreamlitChatMessageHisto
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_community.chat_models import ChatYandexGPT
+import time
 # from yandex_chain import YandexLLM
 
 import streamlit as st
@@ -14,6 +15,7 @@ from playsound import playsound
 
 def ozuvi4it_mp3_fa4il(fa4il_put):
     playsound(fa4il_put)
+    time.sleep(1)
 
 # это основная функция, которая запускает приложение streamlit
 def main():
