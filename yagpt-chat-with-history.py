@@ -19,7 +19,7 @@ def main():
     logo = Image.open(logo_image)
     # Изменение размера логотипа
     resized_logo = logo.resize((100, 100))
-    st.set_page_config(page_title="YaGPT чатбот", page_icon="📖")   
+    st.set_page_config(page_title="Забелин чатбот", page_icon="📖")   
     # Отображаем лого измененного небольшого размера
     st.image(resized_logo)
     st.title('📖 Забелин чатбот')
