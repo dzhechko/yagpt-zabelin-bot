@@ -1,6 +1,6 @@
 yandex-chain
 streamlit
 streamlit-chat
-langchain
-yandexcloud
+langchain==0.1.4
+yandexcloud==0.255.0
 python-dotenv
