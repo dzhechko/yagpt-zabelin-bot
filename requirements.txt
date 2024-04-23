@@ -5,3 +5,4 @@ streamlit
 streamlit-chat
 python-dotenv
 playsound
+pygobject
