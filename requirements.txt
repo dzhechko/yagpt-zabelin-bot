@@ -4,5 +4,3 @@ streamlit-chat
 langchain==0.1.4
 yandexcloud==0.255.0
 python-dotenv
-pydub
-ffmpeg-python

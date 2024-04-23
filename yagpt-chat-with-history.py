@@ -8,7 +8,6 @@ import streamlit as st
 import os
 # from dotenv import load_dotenv
 
-from pydub import AudioSegment
 import requests
 
 def ozuvi4it_mp3_fa4il(fa4il_put,  text, api_key):
@@ -17,10 +16,7 @@ def ozuvi4it_mp3_fa4il(fa4il_put,  text, api_key):
     # The response is a stream of bytes, so you can write it to a file
     with open(fa4il_put, "wb") as f:
         f.write(res_tts.content)  
-    # Load the MP3 file
-    audio = AudioSegment.from_file(fa4il_put)
-    # Play the audio
-    audio.play()  
+    st.audio(fa4il_put, format="audio/mpeg", loop=True)
 
 
 
@@ -177,7 +173,7 @@ def main():
         config = {"configurable": {"session_id": "any"}}
         response = chain_with_history.invoke({"question": prompt}, config)
         st.chat_message("ai").write(response.content)
-        st.button('Озвучить ответ!', on_click=ozuvi4it_mp3_fa4il, args=('./images/Hello.mp3', response.content, sk_api_ep))
+        st.button('Озвучить ответ!', on_click=ozuvi4it_mp3_fa4il, args=('./Hello.mp3', response.content, sk_api_ep))
 
 
     # Отобразить сообщения в конце, чтобы вновь сгенерированные отображались сразу
