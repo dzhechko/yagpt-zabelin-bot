@@ -19,24 +19,6 @@ def ozuvi4it_mp3_fa4il(fa4il_put,  text, api_key):
         f.write(res_tts.content)    
     playsound(fa4il_put)
 
-# Аутентификация через API-ключ.
-# configure_credentials(
-#    yandex_credentials=creds.YandexCredentials(
-#       api_key=st.secrets["YC_API_KEY"]
-#    )
-# )
-
-# def synthesize(text, export_path):
-#    model = model_repository.synthesis_model()
-
-#    # Задайте настройки синтеза.
-#    model.voice = 'jane'
-#    model.role = 'good'
-
-#    # Синтез речи и создание аудио с результатом.
-#    result = model.synthesize(text, raw_format=False)
-#    result.export(export_path, 'mp3')
-
 
 # это основная функция, которая запускает приложение streamlit
 def main():
@@ -191,12 +173,8 @@ def main():
         config = {"configurable": {"session_id": "any"}}
         response = chain_with_history.invoke({"question": prompt}, config)
         st.chat_message("ai").write(response.content)
-        st.button('Нажмите, чтобы озвучить mp3 файл', on_click=ozuvi4it_mp3_fa4il, args=('./images/Hello.mp3', response.content, sk_api_ep))
-        # speech_button = st.button("Озвучить ответ")
-        # if speech_button:
-        #     mytext = f"Озвучка {response.content}"
-        #     st.text(mytext)
-        # #      playsound.playsound("./images/Hello.mp3")
+        st.button('Озвучить ответ!', on_click=ozuvi4it_mp3_fa4il, args=('./images/Hello.mp3', response.content, sk_api_ep))
+
 
     # Отобразить сообщения в конце, чтобы вновь сгенерированные отображались сразу
     with view_messages:
