@@ -177,7 +177,7 @@ def main():
         # st.button('Озвучить ответ!')
         # if st.button:
         file_name = "./Hello.mp3"
-        params = {"text": response.content,"voice": "marina", "role": "friendly"}
+        params = {"text": response.content,"voice": "anton", "role": "good"}
         res_tts = requests.get(sk_api_ep, params=params)
         # The response is a stream of bytes, so you can write it to a file
         with open(file_name, "wb") as f:
