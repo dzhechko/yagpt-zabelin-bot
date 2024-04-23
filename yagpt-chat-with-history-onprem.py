@@ -52,13 +52,13 @@ def main():
 
     view_messages = st.expander("Просмотр истории сообщений")
 
-    yagpt_folder_id = st.secrets["YC_FOLDER_ID"]
-    yagpt_api_key = st.secrets["YC_API_KEY"]
+    # yagpt_folder_id = st.secrets["YC_FOLDER_ID"]
+    # yagpt_api_key = st.secrets["YC_API_KEY"]
 
     # Загрузка переменных из файла .env
-    # load_dotenv()
-    # yagpt_folder_id = os.getenv("YC_FOLDER_ID")
-    # yagpt_api_key = os.getenv("YC_API_KEY")
+    load_dotenv()
+    yagpt_folder_id = os.getenv("YC_FOLDER_ID")
+    yagpt_api_key = os.getenv("YC_API_KEY")
 
 
     # # Получение folder id
@@ -128,7 +128,6 @@ def main():
 
     speech_button = st.button("Озвучить ответ")
     if speech_button:
-        st.text("Озвучка")
         playsound.playsound("./images/Hello.mp3")
 
     # Настраиваем LangChain, передавая Message History
