@@ -8,7 +8,7 @@ import streamlit as st
 import os
 from dotenv import load_dotenv
 
-from speechkit import model_repository, configure_credentials, creds
+from speechkit import model_repository
 from speechkit.stt import AudioProcessingType
 import playsound
 
