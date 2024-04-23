@@ -115,7 +115,7 @@ def main():
     if len(custom_prompt)==0: custom_prompt = default_prompt
 
 
-    yagpt_temperature = st.sidebar.slider("Степень креативности (температура)", 0.0, 1.0, 0.6)
+    yagpt_temperature = st.sidebar.slider("Степень креативности (температура)", 0.0, 1.0, 0.3)
     yagpt_max_tokens = st.sidebar.slider("Размер контекстного окна (в [токенах](https://cloud.yandex.ru/ru/docs/yandexgpt/concepts/tokens))", 200, 8000, 5000)
 
     def history_reset_function():
