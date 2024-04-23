@@ -1,8 +1,8 @@
 yandex-speechkit
 yandex-chain
-streamlit
-streamlit-chat
 langchain
 yandexcloud
+streamlit
+streamlit-chat
 python-dotenv
 playsound
