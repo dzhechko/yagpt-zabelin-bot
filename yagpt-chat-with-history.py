@@ -122,7 +122,7 @@ def main():
         
     st.sidebar.button("Обнулить историю общения",on_click=history_reset_function)
 
-    st.button("Озвучить ответ")
+    speech_button = st.button("Озвучить ответ")
 
     # Настраиваем LangChain, передавая Message History
     # промпт с учетом контекста общения
@@ -166,12 +166,6 @@ def main():
     # Отобразить сообщения в конце, чтобы вновь сгенерированные отображались сразу
     with view_messages:
         """
-        История сообщений, инициализированная с помощью:
-        ```python
-        msgs = StreamlitChatMessageHistory(key="langchain_messages")
-        ```
-
-        Содержание `st.session_state.langchain_messages`:
         """
         view_messages.json(st.session_state.langchain_messages)
 
