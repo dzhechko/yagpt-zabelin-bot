@@ -1,6 +1,13 @@
+langchain
+langchain-community
+langchain-core
+
+yandexcloud
 yandex-chain
+
+opensearch-py
+
 streamlit
 streamlit-chat
-langchain==0.1.4
-yandexcloud==0.255.0
+
 python-dotenv
