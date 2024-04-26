@@ -135,7 +135,7 @@ def main():
 
     yagpt_temperature = st.sidebar.slider("Степень креативности (температура)", 0.0, 1.0, 0.3)
     yagpt_max_tokens = st.sidebar.slider("Размер контекстного окна (в [токенах](https://cloud.yandex.ru/ru/docs/yandexgpt/concepts/tokens))", 200, 8000, 8000)
-    rag_k = st.sidebar.slider("Количество поисковых выдач размером с один блок", 1, 10, 5)
+    rag_k = st.sidebar.slider("Количество поисковых выдач размером с один блок", 1, 10, 2)
     
     def history_reset_function():
         # Code to be executed when the reset button is clicked
