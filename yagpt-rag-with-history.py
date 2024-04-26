@@ -61,9 +61,9 @@ def main():
     yagpt_folder_id = st.secrets["YC_FOLDER_ID"]
     yagpt_api_key = st.secrets["YC_API_KEY"]
     sk_api_ep = st.secrets["SK_API_EP"]
-    mdb_os_pwd = st.secrets("MDB_OS_PWD")
-    mdb_os_hosts = st.secrets("MDB_OS_HOSTS").split(",")
-    mdb_os_index_name = st.secrets("MDB_OS_INDEX_NAME")
+    mdb_os_pwd = st.secrets["MDB_OS_PWD"]
+    mdb_os_hosts = st.secrets["MDB_OS_HOSTS"].split(",")
+    mdb_os_index_name = st.secrets["MDB_OS_INDEX_NAME"]
 
     # Загрузка переменных из файла .env
     # load_dotenv()
