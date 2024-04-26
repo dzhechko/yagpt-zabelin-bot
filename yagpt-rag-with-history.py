@@ -268,9 +268,6 @@ def main():
             st.write("Озвучить вопрос:")
             st.audio("./Question.mp3", format="audio/mpeg", loop=False)
 
-        # st.write("Озвучить ответ:")
-        # st.audio("./Reply.mp3", format="audio/mpeg", loop=False)
-
         ## добавляем источники к ответу
         input_documents = response["context"]
         i = 0
