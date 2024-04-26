@@ -242,14 +242,34 @@ def main():
         st.chat_message("ai").write(response["answer"])
 
         # Добавляем озвучку к ответу
-        file_name = "./Hello.mp3"
+        file_name = "./Reply.mp3"
         params = {"text": response["answer"],"voice": "zabelin"}
         res_tts = requests.get(sk_api_ep, params=params)
         # The response is a stream of bytes, so you can write it to a file
         with open(file_name, "wb") as f:
             f.write(res_tts.content)  
-        st.write("Озвучить ответ:")
-        st.audio("./Hello.mp3", format="audio/mpeg", loop=False)
+
+        # Добавляем озвучку к вопросу
+        file_name = "./Question.mp3"
+        params = {"text": prompt,"voice": "zabelin"}
+        res_tts = requests.get(sk_api_ep, params=params)
+        # The response is a stream of bytes, so you can write it to a file
+        with open(file_name, "wb") as f:
+            f.write(res_tts.content)          
+
+        # Создаем две колонки
+        col1, col2 = st.columns(2)
+        # В первой колонке выводим "Озвучить ответ"
+        with col1:
+            st.write("Озвучить ответ:")
+            st.audio("./Reply.mp3", format="audio/mpeg", loop=False)
+        # Во второй колонке выводим "Озвучить вопрос"
+        with col2:
+            st.write("Озвучить вопрос:")
+            st.audio("./Question.mp3", format="audio/mpeg", loop=False)
+
+        # st.write("Озвучить ответ:")
+        # st.audio("./Reply.mp3", format="audio/mpeg", loop=False)
 
         ## добавляем источники к ответу
         input_documents = response["context"]
