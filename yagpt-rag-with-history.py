@@ -29,19 +29,19 @@ def main():
     logo = Image.open(logo_image)
     # Изменение размера логотипа
     resized_logo = logo.resize((100, 100))
-    st.set_page_config(page_title="Забелин чатбот", page_icon="📖")   
+    st.set_page_config(page_title="Забелин чат-бот", page_icon="📖")   
     # Отображаем лого измененного небольшого размера
     st.image(resized_logo)
-    st.title('📖 Забелин чатбот')
+    st.title('📖 Забелин чат-бот')
     """
-    Чатбот на базе YandexGPT, который запоминает контекст беседы. Чтобы "сбросить" контекст обновите страницу браузера.
+    Чат-бот на базе YandexGPT, который запоминает контекст беседы. Чтобы "сбросить" контекст обновите страницу браузера.
     """
     # st.warning('Это Playground для общения с YandexGPT')
 
     # вводить все credentials в графическом интерфейсе слева
     # Sidebar contents
     with st.sidebar:
-        st.title('\U0001F917\U0001F4ACYaGPT чатбот')
+        st.title('\U0001F917\U0001F4ACYandexGPT чат-бот')
         st.markdown('''
         ## О программе
         Данный чатбот использует следующие компоненты:
@@ -77,7 +77,7 @@ def main():
     # else:
     #     yagpt_folder_id = st.sidebar.text_input("YaGPT folder ID", type="password")
     if not yagpt_folder_id:
-        st.info("Укажите [YC folder ID](https://cloud.yandex.ru/ru/docs/yandexgpt/quickstart#yandex-account_1) для запуска чатбота")
+        st.info("Укажите [YC folder ID](https://cloud.yandex.ru/ru/docs/yandexgpt/quickstart#yandex-account_1) для запуска чат-бота")
         st.stop()
 
     # # Получение ключа YaGPT API
@@ -86,7 +86,7 @@ def main():
     # else:
     #     yagpt_api_key = st.sidebar.text_input("YaGPT API Key", type="password")
     if not yagpt_api_key:
-        st.info("Укажите [YaGPT API ключ](https://cloud.yandex.ru/ru/docs/iam/operations/api-key/create#console_1) для запуска чатбота")
+        st.info("Укажите [YandexGPT API ключ](https://cloud.yandex.ru/ru/docs/iam/operations/api-key/create#console_1) для запуска чат-бота")
         st.stop()
 
     with st.sidebar:
@@ -102,7 +102,7 @@ def main():
     index_model = 1
     selected_model = st.sidebar.radio("Выберите модель для работы:", model_list, index=index_model, key="index")     
     
-    # yagpt_prompt = st.sidebar.text_input("Промпт-инструкция для YaGPT")
+    # yagpt_prompt = st.sidebar.text_input("Промпт-инструкция для YandexGPT")
     # Добавляем виджет для выбора опции
     prompt_option = st.sidebar.selectbox(
         'Выберите какой системный промпт использовать',
