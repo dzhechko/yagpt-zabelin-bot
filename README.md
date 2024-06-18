@@ -1,7 +1,7 @@
-## YaGPT чатбот с поддержкой контекста общения с пользователем 
+## YandexGPT чатбот с поддержкой контекста общения с пользователем 
 
 ### Краткая информация
-Данный YaGPT-бот использует следующие компоненты:
+Данный YandexGPT-бот использует следующие компоненты:
 - [Yandex GPT](https://cloud.yandex.ru/services/yandexgpt)
 - [Yandex GPT for Langchain](https://python.langchain.com/docs/integrations/chat/yandex)
 - [Streamlit](https://streamlit.io/)
