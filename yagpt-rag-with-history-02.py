@@ -1,11 +1,12 @@
 from langchain_community.chat_message_histories import StreamlitChatMessageHistory
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables.history import RunnableWithMessageHistory
-from langchain_community.chat_models import ChatYandexGPT
+# from langchain_community.chat_models import ChatYandexGPT
 
 from langchain_community.vectorstores import OpenSearchVectorSearch
 from yandex_chain import YandexEmbeddings
-# from yandex_chain import YandexLLM
+from yandex_chain import YandexLLM
+from yandex_chain import ChatYandexGPT
 
 from langchain.chains import create_history_aware_retriever, create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
@@ -174,12 +175,18 @@ def main():
     # model_uri = "gpt://"+str(yagpt_folder_id)+"/yandexgpt/latest"
     # model_uri = "gpt://"+str(yagpt_folder_id)+"/yandexgpt-lite/latest"
     if selected_model==model_list[0]: 
-        model_uri = "gpt://"+str(yagpt_folder_id)+"/yandexgpt-lite/latest"
+        # model_uri = "gpt://"+str(yagpt_folder_id)+"/yandexgpt-lite/latest"
+        model_uri = "YandexGPTModel.LiteRC"
     else:
-        model_uri = "gpt://"+str(yagpt_folder_id)+"/yandexgpt/latest"    
-    llm = ChatYandexGPT(api_key=yagpt_api_key, model_uri=model_uri, temperature = yagpt_temperature, max_tokens = yagpt_max_tokens)
+        # model_uri = "gpt://"+str(yagpt_folder_id)+"/yandexgpt/latest"  
+        model_uri = "YandexGPTModel.Pro"  
+    
+    # llm = ChatYandexGPT(api_key=yagpt_api_key, model_uri=model_uri, temperature = yagpt_temperature, max_tokens = yagpt_max_tokens)
+    
+    # используем yandex-chain
     # llm = YandexLLM(api_key = yagpt_api_key, folder_id = yagpt_folder_id, temperature = 0.6, max_tokens=8000, use_lite = False)
-
+    llm = ChatYandexGPT(folder_id = yagpt_folder_id, api_key=yagpt_api_key, model_uri=model_uri, temperature = yagpt_temperature, max_tokens = yagpt_max_tokens)
+    
     # инициализация объекта класса YandexEmbeddings
     embeddings = YandexEmbeddings(folder_id=yagpt_folder_id, api_key=yagpt_api_key)
     # Поскольку эмбеддинги уже есть, то запускаем эту строчку
