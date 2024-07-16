@@ -1,0 +1,13 @@
+langchain
+langchain-community
+langchain-core
+
+yandexcloud
+yandex-chain
+
+opensearch-py
+
+streamlit
+streamlit-chat
+
+python-dotenv

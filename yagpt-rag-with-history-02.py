@@ -184,8 +184,8 @@ def main():
     # llm = ChatYandexGPT(api_key=yagpt_api_key, model_uri=model_uri, temperature = yagpt_temperature, max_tokens = yagpt_max_tokens)
     
     # используем yandex-chain
-    llm = YandexLLM(model_uri=model_uri, api_key = yagpt_api_key, folder_id = yagpt_folder_id, temperature = yagpt_temperature, max_tokens=yagpt_max_tokens)
-    # llm = ChatYandexGPT(folder_id = yagpt_folder_id, api_key=yagpt_api_key, model_uri=model_uri, temperature = yagpt_temperature, max_tokens = yagpt_max_tokens)
+    # llm = YandexLLM(model_uri=model_uri, api_key = yagpt_api_key, folder_id = yagpt_folder_id, temperature = yagpt_temperature, max_tokens=yagpt_max_tokens)
+    llm = ChatYandexGPT(folder_id = yagpt_folder_id, api_key=yagpt_api_key, model_uri=model_uri, temperature = yagpt_temperature, max_tokens = yagpt_max_tokens)
     
     # инициализация объекта класса YandexEmbeddings
     embeddings = YandexEmbeddings(folder_id=yagpt_folder_id, api_key=yagpt_api_key)
