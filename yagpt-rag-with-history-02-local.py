@@ -15,7 +15,7 @@ from langchain_core.chat_history import BaseChatMessageHistory
 
 import streamlit as st
 import os
-# from dotenv import load_dotenv
+from dotenv import load_dotenv
 
 import requests
 
@@ -59,17 +59,22 @@ def main():
 
     view_messages = st.expander("Просмотр истории сообщений")
 
-    yagpt_folder_id = st.secrets["YC_FOLDER_ID"]
-    yagpt_api_key = st.secrets["YC_API_KEY"]
-    sk_api_ep = st.secrets["SK_API_EP"]
-    mdb_os_pwd = st.secrets["MDB_OS_PWD"]
-    mdb_os_hosts = st.secrets["MDB_OS_HOSTS"].split(",")
-    mdb_os_index_name = st.secrets["MDB_OS_INDEX_NAME"]
+    # yagpt_folder_id = st.secrets["YC_FOLDER_ID"]
+    # yagpt_api_key = st.secrets["YC_API_KEY"]
+    # sk_api_ep = st.secrets["SK_API_EP"]
+    # mdb_os_pwd = st.secrets["MDB_OS_PWD"]
+    # mdb_os_hosts = st.secrets["MDB_OS_HOSTS"].split(",")
+    # mdb_os_index_name = st.secrets["MDB_OS_INDEX_NAME"]
 
     # Загрузка переменных из файла .env
-    # load_dotenv()
-    # yagpt_folder_id = os.getenv("YC_FOLDER_ID")
-    # yagpt_api_key = os.getenv("YC_API_KEY")
+    load_dotenv()
+    yagpt_folder_id = os.getenv("YC_FOLDER_ID")
+    yagpt_api_key = os.getenv("YC_API_KEY")
+    sk_api_ep = os.getenv("SK_API_EP")
+    mdb_os_pwd = os.getenv("MDB_OS_PWD")
+    mdb_os_hosts = os.getenv("MDB_OS_HOSTS").split(",")
+    mdb_os_index_name = os.getenv("MDB_OS_INDEX_NAME_MET")
+
 
 
     # # Получение folder id
@@ -190,6 +195,7 @@ def main():
     # инициализация объекта класса YandexEmbeddings
     embeddings = YandexEmbeddings(folder_id=yagpt_folder_id, api_key=yagpt_api_key)
     # Поскольку эмбеддинги уже есть, то запускаем эту строчку
+    print(mdb_os_index_name)
     vectorstore = OpenSearchVectorSearch (
         embedding_function=embeddings,
         index_name = mdb_os_index_name,
@@ -239,6 +245,7 @@ def main():
         config = {"configurable": {"session_id": "any"}}
         inputs = {"input": prompt}
         response = conversational_rag_chain.invoke(inputs,config)
+
         # response = chain_with_history.invoke({"question": prompt}, config)
         st.chat_message("ai").write(response["answer"])
 

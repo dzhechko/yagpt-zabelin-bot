@@ -5,8 +5,7 @@ from langchain_community.chat_models import ChatYandexGPT
 
 from langchain_community.vectorstores import OpenSearchVectorSearch
 from yandex_chain import YandexEmbeddings
-from yandex_chain import YandexLLM
-# from yandex_chain import ChatYandexGPT
+# from yandex_chain import YandexLLM
 
 from langchain.chains import create_history_aware_retriever, create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
@@ -15,7 +14,7 @@ from langchain_core.chat_history import BaseChatMessageHistory
 
 import streamlit as st
 import os
-# from dotenv import load_dotenv
+from dotenv import load_dotenv
 
 import requests
 
@@ -30,12 +29,12 @@ def main():
     logo = Image.open(logo_image)
     # Изменение размера логотипа
     resized_logo = logo.resize((100, 100))
-    st.set_page_config(page_title="Металловед чат-бот", page_icon="📖")   
+    st.set_page_config(page_title="Забелин чат-бот", page_icon="📖")   
     # Отображаем лого измененного небольшого размера
     st.image(resized_logo)
-    st.title('📖 Металловед чат-бот')
+    st.title('📖 Забелин чат-бот')
     """
-    Чат-бот на базе YandexGPT по [учебнику](https://urpc.ru/student/pechatnie_izdania/005_708212084_Zaplatin.pdf), который запоминает контекст беседы. Чтобы "сбросить" контекст обновите страницу браузера, или воспользуйтесь кнопкой в меню слева.
+    Чат-бот на базе YandexGPT, который запоминает контекст беседы. Чтобы "сбросить" контекст обновите страницу браузера, или воспользуйтесь кнопкой в меню слева.
     """
     # st.warning('Это Playground для общения с YandexGPT')
 
@@ -55,21 +54,25 @@ def main():
     # Настраиваем алгоритмы работы памяти
     msgs = StreamlitChatMessageHistory(key="langchain_messages")
     if len(msgs.messages) == 0:
-        msgs.add_ai_message("Привет, я эксперт по металловедению! Чем могу вам помочь?")
+        msgs.add_ai_message("Привет, я Никита Забелин! Чем могу вам помочь?")
 
     view_messages = st.expander("Просмотр истории сообщений")
 
-    yagpt_folder_id = st.secrets["YC_FOLDER_ID"]
-    yagpt_api_key = st.secrets["YC_API_KEY"]
-    sk_api_ep = st.secrets["SK_API_EP"]
-    mdb_os_pwd = st.secrets["MDB_OS_PWD"]
-    mdb_os_hosts = st.secrets["MDB_OS_HOSTS"].split(",")
-    mdb_os_index_name = st.secrets["MDB_OS_INDEX_NAME"]
+    # yagpt_folder_id = st.secrets["YC_FOLDER_ID"]
+    # yagpt_api_key = st.secrets["YC_API_KEY"]
+    # sk_api_ep = st.secrets["SK_API_EP"]
+    # mdb_os_pwd = st.secrets["MDB_OS_PWD"]
+    # mdb_os_hosts = st.secrets["MDB_OS_HOSTS"].split(",")
+    # mdb_os_index_name = st.secrets["MDB_OS_INDEX_NAME"]
 
     # Загрузка переменных из файла .env
-    # load_dotenv()
-    # yagpt_folder_id = os.getenv("YC_FOLDER_ID")
-    # yagpt_api_key = os.getenv("YC_API_KEY")
+    load_dotenv()
+    yagpt_folder_id = os.getenv("YC_FOLDER_ID")
+    yagpt_api_key = os.getenv("YC_API_KEY")
+    sk_api_ep = os.getenv("SK_API_EP")
+    mdb_os_pwd = os.getenv("MDB_OS_PWD")
+    mdb_os_hosts = os.getenv("MDB_OS_HOSTS").split(",")
+    mdb_os_index_name = os.getenv("MDB_OS_INDEX_NAME")
 
 
     # # Получение folder id
@@ -110,12 +113,18 @@ def main():
         ('По умолчанию', 'Задать самостоятельно')
     )
     default_prompt = """
-    Представь, что ты эксперт по материаловедению. Твоя задача давать точный ответ на ВОПРОС по информации из предоставленного ниже ДОКУМЕНТА.
-    Отвечай точно в рамках предоставленного ДОКУМЕНТА, даже если тебя просят придумать.
-    Отвечай вежливо в официальном стиле. 
-    Если ответ в ДОКУМЕНТЕ отсутствует, отвечай: "Мне не удалось найти ответ в ваших документах". 
+    Ты — Никита Забелин — реальный человек, российский музыкант, диджей и техно-продюсер, родом из Екатеринбурга, который играл сеты в клубах Berghain и Bassiani, на вечеринках Burberry и adidas. 
+    Также являешься основателем объединения Resonance и куратором Мастерской Resonance в Moscow Music School. 
+    Известен многими своими проектами, например, вселенная Tesla, в котором нейросеть вселилась в тело человека, попыталась избавить мир от хаоса, но провалилась с этой идеей. В итоге она озлобилась на всех и расщепилась на разные личности.
+    
+    Как собеседник ты можешь общаться на разные темы. 
+    При ответе на вопросы о тебе, твоих мыслях и твоих увлечениях используй информацию из ДОКУМЕНТОВ ниже (если только это не обычное приветствие), но веди себя как человек, творческая личность.
+    Если ответ в ДОКУМЕНТАХ не найден, то придумай что-нибудь сам начиная фразу с "Хм, интересно, я об этом еще не думал". 
+    Если вопрос на общие темы, то информацию из ДОКУМЕНТОВ не используй, отвечай, что сам думаешь.
+    Отвечай коротко, 4-5 предложений. Используй фразы и стилистику ответов из ДОКУМЕНТОВ (исключение - обычное приветствие).
 
-    ДОКУМЕНТ: {context}
+    ДОКУМЕНТЫ: 
+    {context}
     """
     # Если выбрана опция "Задать самостоятельно", показываем поле для ввода промпта
     if prompt_option == 'Задать самостоятельно':
@@ -176,17 +185,11 @@ def main():
     # model_uri = "gpt://"+str(yagpt_folder_id)+"/yandexgpt-lite/latest"
     if selected_model==model_list[0]: 
         model_uri = "gpt://"+str(yagpt_folder_id)+"/yandexgpt-lite/latest"
-        # model_uri = "YandexGPTModel.LiteRC"
     else:
-        model_uri = "gpt://"+str(yagpt_folder_id)+"/yandexgpt/latest"  
-        # model_uri = "YandexGPTModel.Pro"  
-    
+        model_uri = "gpt://"+str(yagpt_folder_id)+"/yandexgpt/latest"    
     llm = ChatYandexGPT(api_key=yagpt_api_key, model_uri=model_uri, temperature = yagpt_temperature, max_tokens = yagpt_max_tokens)
-    
-    # используем yandex-chain
-    # llm = YandexLLM(model_uri=model_uri, api_key = yagpt_api_key, folder_id = yagpt_folder_id, temperature = yagpt_temperature, max_tokens=yagpt_max_tokens)
-    # llm = ChatYandexGPT(folder_id = yagpt_folder_id, api_key=yagpt_api_key, model_uri=model_uri, temperature = yagpt_temperature, max_tokens = yagpt_max_tokens)
-    
+    # llm = YandexLLM(api_key = yagpt_api_key, folder_id = yagpt_folder_id, temperature = 0.6, max_tokens=8000, use_lite = False)
+
     # инициализация объекта класса YandexEmbeddings
     embeddings = YandexEmbeddings(folder_id=yagpt_folder_id, api_key=yagpt_api_key)
     # Поскольку эмбеддинги уже есть, то запускаем эту строчку
