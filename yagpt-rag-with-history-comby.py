@@ -20,6 +20,7 @@ import os
 from dotenv import load_dotenv
 
 import requests
+import pandas as pd
 
 # Создаем функцию для записи вопросов из словаря в файл
 # требуется если необходимо оцифровать только вопросную часть интервью
@@ -34,14 +35,19 @@ import csv
 # возвращает словарь вопрос-ответ
 def parse_csv_file(file_path):
     questions_answers = {} # возвращаемй словарь вопрос-ответ
+    try:
+            # Загружаем данные из CSV файла по URL
+            df = pd.read_csv(file_path, delimiter=';')
 
-    with open(file_path, 'r', encoding='utf-8') as file:
-        reader = csv.reader(file, delimiter=';')
-        for row in reader:
-            if len(row) == 2:
-                question = row[0].strip()
-                answer = row[1].strip()
-                questions_answers[question] = answer
+            # Заполняем словарь вопросами и ответами
+            for index, row in df.iterrows():
+                if len(row) == 2:
+                    question = row[0].strip()
+                    answer = row[1].strip()
+                    questions_answers[question] = answer
+
+    except Exception as e:
+            print(f"Ошибка при загрузке CSV файла: {e}")
 
     return questions_answers
 
