@@ -1,4 +1,5 @@
 .env
 # Игнорировать все файлы в папке __pycache__ и ее подпапках
 __pycache__/
-*.mp3
+Question.mp3
+Reply.mp3
