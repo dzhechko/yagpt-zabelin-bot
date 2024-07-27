@@ -211,8 +211,9 @@ def main():
     index_model = 1
     selected_model = st.sidebar.radio("Выберите модель для работы:", model_list, index=index_model, key="index")     
     
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    csv_file_path = current_dir + '\TESLA_q_and_a_NEW.csv'
+    # current_dir = os.path.dirname(os.path.abspath(__file__))
+    # csv_file_path = current_dir + '\TESLA_q_and_a_NEW.csv'
+    csv_file_path = "https://raw.githubusercontent.com/dzhechko/yagpt-zabelin-bot/main/TESLA_q_and_a_NEW.csv"
     print(f"ПУТЬ К ФАЙЛУ С ИНТЕРВЬЮ {csv_file_path}")
 
     questions_answers = parse_csv_file(csv_file_path) # получить словарь вопрос-ответ по интервью Забелина
@@ -359,7 +360,7 @@ def main():
         print(f"\n\nИстория ПОСЛЕ : {st.session_state.history}")
         
         history_summary = get_history_summary(llm, st.session_state.history)
-        
+
         st.session_state.history = history_summary
         print(f"\nИстория после суммаризации: {st.session_state.history}")
 
